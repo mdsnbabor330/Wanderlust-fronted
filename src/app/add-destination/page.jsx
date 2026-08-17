@@ -1,5 +1,6 @@
 'use client';
 import { FieldError, Input, Label, ListBox, TextField, Select, Button, TextArea } from '@heroui/react';
+import { redirect } from 'next/navigation';
 import React from 'react';
 
 const AddDestination = () => {
@@ -19,13 +20,15 @@ const AddDestination = () => {
 
         const data = await res.json()
         console.log('after insert',data);
+
+        redirect("/");
     }
 
 
     return (
         <form onSubmit={onSubmit}
 
-            className="m-20 p-5 max-w-350 mx-auto space-y-8 border border-gray-200 shadow-sm rounded-2xl"
+            className="m-16 p-5 w-250 mx-auto space-y-8 border border-gray-200 shadow-sm rounded-2xl"
           >
             <h1 className='text-3xl font-bold'>Add Destination</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

@@ -5,8 +5,8 @@ import { AiOutlineUser } from 'react-icons/ai';
 
 const Navbar = () => {
     return (
-        <div className='fixed right-0 left-0 top-1'>
-            <div className='flex items-center justify-between p-3 my-1 mx-2 bg-white/90 shadow rounded-md'>
+        <div className='fixed right-0 left-0 z-10'>
+            <div className='flex items-center justify-between p-4 bg-white shadow '>
                 <ul className='flex items-center gap-5 text-black'>
                     <li>
                         <Link href={'/'}>Home</Link>
@@ -22,11 +22,11 @@ const Navbar = () => {
                     </li>
                 </ul>
 
-                <div>
+                <div className='mr-40'>
                     <Image
                     src={Logo}
-                    height={100}
-                    width={150}
+                    height={"auto"}
+                    width={180}
                     alt='wanderlust-logo'
                     ></Image>
 
