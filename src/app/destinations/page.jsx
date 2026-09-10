@@ -11,6 +11,7 @@ const Destinations = async () => {
 
   console.log(destinations);
 
+
   return (
     <div className="w-300 mx-auto  m-16 p-5">
       <h2 className="text-3xl font-medium text-black">
@@ -54,7 +55,7 @@ const Destinations = async () => {
                 <Calendar /> {destination.duration} Days
               </p>
 
-              <button>
+              <button >
                 <Link
                   className="text-sky-600 flex items-center gap-2"
                   href={`destinations/${destination._id}`}

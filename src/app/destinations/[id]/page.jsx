@@ -6,6 +6,7 @@ import Link from "next/link";
 import { CiLocationOn } from "react-icons/ci";
 import EditModal from "@/components/EditModal";
 import DeleteModal from "@/components/DeleteModal";
+import Booking from "@/components/Booking";
 
 const DestinationDetails = async ({ params }) => {
   const { id } = await params;
@@ -62,10 +63,7 @@ const DestinationDetails = async ({ params }) => {
                 <p>Per Person</p>
               </div>
               <div></div>
-              <Button className="rounded-sm w-full text-xl mt-4 flex items-center">
-                Book Now
-                <ArrowRight />
-              </Button>
+              <Booking destinationDetails={destinationDetails}/>
             </div>
           </div>
         </div>
