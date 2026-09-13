@@ -1,5 +1,4 @@
 'use client';
-import { FieldError, Input, Label, ListBox, TextField, Select, Button, TextArea } from '@heroui/react';
 import { redirect } from 'next/navigation';
 import React from 'react';
 
@@ -24,141 +23,102 @@ const AddDestination = () => {
         redirect("/");
     }
 
-
     return (
         <form onSubmit={onSubmit}
-
-            className="m-16 p-5 w-250 mx-auto space-y-8 border border-gray-200 shadow-sm rounded-2xl"
+            className="w-full max-w-4xl mx-auto my-8 p-4 md:p-8 space-y-8 border border-gray-200 shadow-sm rounded-2xl"
           >
             <h1 className='text-3xl font-bold'>Add Destination</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Destination Name */}
-              <div className="md:col-span-2">
-                <TextField name="destinationName" isRequired>
-                  <Label>Destination Name</Label>
-                  <Input placeholder="Bali Paradise" className="rounded-2xl " />
-                  <FieldError />
-                </TextField>
+              <div className="md:col-span-2 flex flex-col gap-2">
+                  <label className="text-sm font-medium text-gray-700">Destination Name</label>
+                  <input name="destinationName" required placeholder="Bali Paradise" className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" />
               </div>
 
               {/* Country */}
-              <TextField name="country" isRequired>
-                <Label>Country</Label>
-                <Input placeholder="Indonesia" className="rounded-2xl" />
-                <FieldError />
-              </TextField>
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Country</label>
+                <input name="country" required placeholder="Indonesia" className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              </div>
 
-              {/* Category - Updated Select Component */}
-              <div>
-                <Select
+              {/* Category */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Category</label>
+                <select
                   name="category"
-                  isRequired
-                  className="w-full"
-                  placeholder="Select category"
+                  required
+                  className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500 w-full"
                 >
-                  <Label>Category</Label>
-                  <Select.Trigger className="rounded-2xl">
-                    <Select.Value />
-                    <Select.Indicator />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      <ListBox.Item id="Beach" textValue="Beach">
-                        Beach
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Mountain" textValue="Mountain">
-                        Mountain
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="City" textValue="City">
-                        City
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Adventure" textValue="Adventure">
-                        Adventure
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Cultural" textValue="Cultural">
-                        Cultural
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                      <ListBox.Item id="Luxury" textValue="Luxury">
-                        Luxury
-                        <ListBox.ItemIndicator />
-                      </ListBox.Item>
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
+                  <option value="" disabled selected>Select category</option>
+                  <option value="Beach">Beach</option>
+                  <option value="Mountain">Mountain</option>
+                  <option value="City">City</option>
+                  <option value="Adventure">Adventure</option>
+                  <option value="Cultural">Cultural</option>
+                  <option value="Luxury">Luxury</option>
+                </select>
               </div>
 
               {/* Price */}
-              <TextField name="price" type="number" isRequired>
-                <Label>Price (USD)</Label>
-                <Input
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Price (USD)</label>
+                <input
+                  name="price"
                   type="number"
+                  required
                   placeholder="1299"
-                  className="rounded-2xl"
+                  className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
-                <FieldError />
-              </TextField>
-
-              {/* Duration */}
-              <TextField name="duration" isRequired>
-                <Label>Duration</Label>
-                <Input
-                  placeholder="7 Days / 6 Nights"
-                  className="rounded-2xl"
-                />
-                <FieldError />
-              </TextField>
-
-              {/* Departure Date */}
-              <div className="md:col-span-2">
-                <TextField name="departureDate" type="date" isRequired>
-                  <Label>Departure Date</Label>
-                  <Input type="date" className="rounded-2xl" />
-                  <FieldError />
-                </TextField>
               </div>
 
-              {/* Image URL - Removed preview */}
-              <div className="md:col-span-2">
-                <TextField name="imageUrl" isRequired>
-                  <Label>Image URL</Label>
-                  <Input
-                    type="url"
-                    placeholder="https://example.com/bali-paradise.jpg"
-                    className="rounded-2xl"
-                  />
-                  <FieldError />
-                </TextField>
+              {/* Duration */}
+              <div className="flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Duration</label>
+                <input
+                  name="duration"
+                  required
+                  placeholder="7 Days / 6 Nights"
+                  className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                />
+              </div>
+
+              {/* Departure Date */}
+              <div className="md:col-span-2 flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Departure Date</label>
+                <input name="departureDate" type="date" required className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+              </div>
+
+              {/* Image URL */}
+              <div className="md:col-span-2 flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Image URL</label>
+                <input
+                  name="imageUrl"
+                  type="url"
+                  required
+                  placeholder="https://example.com/bali-paradise.jpg"
+                  className="rounded-2xl border border-gray-300 p-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                />
               </div>
 
               {/* Description */}
-              <div className="md:col-span-2">
-                <TextField name="description" isRequired>
-                  <Label>Description</Label>
-                  <TextArea
-                    placeholder="Describe the travel experience..."
-                    className="rounded-3xl"
-                  />
-                  <FieldError />
-                </TextField>
+              <div className="md:col-span-2 flex flex-col gap-2">
+                <label className="text-sm font-medium text-gray-700">Description</label>
+                <textarea
+                  name="description"
+                  required
+                  placeholder="Describe the travel experience..."
+                  className="rounded-3xl border border-gray-300 p-3 min-h-[120px] focus:outline-none focus:ring-2 focus:ring-sky-500"
+                />
               </div>
             </div>
 
             {/* Buttons */}
-
-            <Button
+            <button
               type="submit"
-              variant="outline"
-            //   isLoading={isPending}
-              className=" rounded-md p-2 w-full bg-cyan-500 text-white"
+              className="rounded-md p-3 w-full bg-cyan-500 hover:bg-cyan-600 transition-colors text-white font-medium shadow-sm"
             >
-              {/* {isPending ? "Adding Package..." : "Add Travel Package"} */}
               Add Destination
-            </Button>
+            </button>
           </form>
     );
 };

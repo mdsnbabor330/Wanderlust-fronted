@@ -1,5 +1,5 @@
 import { ArrowLeft, ArrowRight } from "@gravity-ui/icons";
-import { Button, Calendar } from "@heroui/react";
+
 import Image from "next/image";
 import Link from "next/link";
 
@@ -17,7 +17,7 @@ const DestinationDetails = async ({ params }) => {
   console.log(id);
 
   return (
-    <div className="w-300 mx-auto  m-18">
+    <div className="w-full max-w-6xl mx-auto p-4 md:p-8 my-8 md:my-16">
       
       <div className="flex justify-between items-center px-2 py-3 shadow mb-5">
           <Link href={"/"} className="flex gap-3 items-center text-gray-500 bg-white">
@@ -30,7 +30,7 @@ const DestinationDetails = async ({ params }) => {
           </div>
         </div>
       <div className="p-5 shadow">
-        <div className="w-full h-120 overflow-hidden object-cover">
+        <div className="w-full h-64 md:h-120 overflow-hidden object-cover">
           <Image
             src={destinationDetails.imageUrl}
             alt={destinationDetails.destinationName}
@@ -40,8 +40,8 @@ const DestinationDetails = async ({ params }) => {
           />
         </div>
         <hr></hr>
-        <div className="grid grid-cols-3 my-5 gap-4">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-3 my-5 gap-6">
+          <div className="md:col-span-2">
             <p className="flex items-center gap-2">
               <CiLocationOn />
               {destinationDetails.country}

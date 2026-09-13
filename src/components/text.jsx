@@ -1,37 +1,38 @@
 "use client";
-import { useState } from "react";
-import { redirect } from "next/navigation";
 
-const deleteModal = ({destinationDetails}) => {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+const DeleteBooking = ({booking}) => {
   const {
     _id,
     destinationName,
-  } = destinationDetails;
+  } = booking;
 
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const handelDelete = async (e) => {
-      e.preventDefault();
-      
-      const res= await fetch (`http://localhost:5001/destinations/${_id}`,{
-          method : 'DELETE',
-        headers:{
-            'content-type':'application/json'
-        }
-      })
-      const data= await res.json();
-      console.log(data);
-  
-      redirect("/destinations");
+  const handelDelete = async () => {
+      const res = await fetch(`http://localhost:5001/booking/${_id}`, {
+          method: 'DELETE',
+          headers: {
+            'content-type': 'application/json'
+          }
+      });
+      const data = await res.json();
+      console.log(data, "deleted");
+
+      router.push("/my-bookings");
+      router.refresh();
     };
 
   return (
     <>
-      <button 
-        onClick={() => setIsOpen(true)} 
-        className="bg-red-500 hover:bg-red-600 text-white rounded-md px-4 py-2 transition-colors font-medium text-sm"
+      <button
+        onClick={() => setIsOpen(true)}
+        className="inline-flex items-center justify-center gap-1.5 px-5 py-2 bg-white text-red-500 text-sm font-semibold rounded-md border-2 border-red-400 hover:bg-red-50 transition-colors cursor-pointer"
       >
-        Delete
+        🗑 Cancel
       </button>
 
       {isOpen && (
@@ -42,24 +43,24 @@ const deleteModal = ({destinationDetails}) => {
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-2xl shrink-0">
                   ⚠️
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Delete Destination permanently?</h3>
+                <h3 className="text-xl font-bold text-gray-900">Cancel Booking?</h3>
               </div>
               <p className="text-gray-600 mb-6">
-                This will permanently delete <strong>{destinationName}</strong> and all of its
-                data. This action cannot be undone.
+                This will permanently cancel your booking for <strong>{destinationName}</strong>.
+                This action cannot be undone.
               </p>
               <div className="flex justify-end gap-3">
-                <button 
+                <button
                   onClick={() => setIsOpen(false)}
                   className="px-5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 font-medium transition-colors"
                 >
-                  Cancel
+                  Keep Booking
                 </button>
-                <button 
+                <button
                   onClick={handelDelete}
                   className="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors"
                 >
-                  Delete Destination
+                  Yes, Cancel It
                 </button>
               </div>
             </div>
@@ -70,4 +71,4 @@ const deleteModal = ({destinationDetails}) => {
   );
 };
 
-export default deleteModal;
+export default DeleteBooking;

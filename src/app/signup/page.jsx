@@ -1,19 +1,10 @@
 "use client";
 
 import { authClient } from "@/lib/auth-client";
-import {
-  Button,
-  colorSliderVariants,
-  Description,
-  FieldError,
-  Form,
-  Input,
-  Label,
-  TextField,
-} from "@heroui/react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { FaGoogle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
   const handelSubmit = async (e) => {
@@ -22,116 +13,110 @@ export default function SignUp() {
     const user = Object.fromEntries(formdata.entries());
     console.log(user);
     const { data, error } = await authClient.signUp.email({
-      name:user.name,
+      name: user.name,
       email: user.email,
       password: user.password,
-      imageUrl:user.imageurl
+      image: user.imageurl
     });
     
-    if(data){
+    if (data) {
         redirect("/");
     }
-    if(error){
-        alert("Error");
+    if (error) {
+        toast.warning(error.message);
     }
-
-    
-    
   };
 
   return (
-    <div className=" w-150 my-30 max-w-120 mx-auto">
-      <div className="text-center mb-5 space-y-3">
+    <div className="w-full max-w-md mx-auto my-30">
+      <div className="text-center mb-8 space-y-3">
         <h1 className="font-bold text-5xl">Create Account</h1>
-        <p className="text-gray-600">Start your adverture with Wanderlust</p>
+        <p className="text-gray-600">Start your adventure with Wanderlust</p>
       </div>
 
-      <Form
-        className="flex  flex-col gap-7 p-7 shadow border border-r-gray-100 rounded-2xl"
+      <form
+        className="flex flex-col gap-6 p-8 shadow-sm border border-gray-100 rounded-2xl bg-white"
         onSubmit={handelSubmit}
-        render={(props) => <form {...props} data-custom="foo" />}
       >
-        <TextField isRequired name="name" type="text">
-          <Label>Full Name</Label>
-          <Input placeholder="john deo" className={"p-4"} />
-          <FieldError />
-        </TextField>
-        <TextField
-          isRequired
-          name="email"
-          type="email"
-          validate={(value) => {
-            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
-              return "Please enter a valid email address";
-            }
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700">Full Name</label>
+          <input 
+            required 
+            name="name" 
+            type="text" 
+            placeholder="John Doe" 
+            className="w-full rounded-xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-sky-500" 
+          />
+        </div>
 
-            return null;
-          }}
-        >
-          <Label>Email</Label>
-          <Input placeholder="john@example.com" className={"p-4"} />
-          <FieldError />
-        </TextField>
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700">Email</label>
+          <input
+            required
+            name="email"
+            type="email"
+            placeholder="john@example.com"
+            pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+            title="Please enter a valid email address"
+            className="w-full rounded-xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+        </div>
 
-        <TextField
-          isRequired
-          minLength={8}
-          name="password"
-          type="password"
-          validate={(value) => {
-            if (value.length < 8) {
-              return "Password must be at least 8 characters";
-            }
-            if (!/[A-Z]/.test(value)) {
-              return "Password must contain at least one uppercase letter";
-            }
-            if (!/[0-9]/.test(value)) {
-              return "Password must contain at least one number";
-            }
-
-            return null;
-          }}
-        >
-          <Label>Password</Label>
-          <Input placeholder="Enter your password" className={"p-4"} />
-          <Description>
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700">Password</label>
+          <input
+            required
+            minLength={8}
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            pattern="^(?=.*[A-Z])(?=.*\d).{8,}$"
+            title="Password must be at least 8 characters with 1 uppercase and 1 number"
+            className="w-full rounded-xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-sky-500"
+          />
+          <p className="text-xs text-gray-500 mt-1">
             Must be at least 8 characters with 1 uppercase and 1 number
-          </Description>
-          <FieldError />
-        </TextField>
-        <TextField
-          isRequired
-          name="imageurl"
-          type="text"
-        >
-          <Label>Image URL</Label>
-          <Input placeholder="https://example.com" className={"p-4"} />
-          <FieldError />
-        </TextField>
+          </p>
+        </div>
 
-        <Button type="submit" className={"font-bold  w-full py-5"}>
+        <div className="flex flex-col gap-2">
+          <label className="text-sm font-medium text-gray-700">Image URL</label>
+          <input 
+            name="imageurl" 
+            type="text" 
+            placeholder="https://example.com/image.jpg" 
+            className="w-full rounded-xl border border-gray-300 p-4 focus:outline-none focus:ring-2 focus:ring-sky-500" 
+          />
+        </div>
+
+        <button 
+          type="submit" 
+          className="font-bold bg-sky-500 text-white rounded-xl py-4 mt-2 hover:bg-sky-600 transition-colors"
+        >
           Sign Up
-        </Button>
+        </button>
 
-        <hr />
+        <div className="flex items-center gap-4 my-2">
+          <hr className="flex-1 border-gray-200" />
+          <span className="text-sm text-gray-400">or</span>
+          <hr className="flex-1 border-gray-200" />
+        </div>
 
-        <Button
-          type="submit"
-          className={
-            "font-bold bg-white border flex items-center gap-3 text-black w-full py-5"
-          }
+        <button
+          type="button"
+          className="font-bold bg-white border border-gray-200 flex justify-center items-center gap-3 text-gray-700 rounded-xl py-4 hover:bg-gray-50 transition-colors"
         >
-          <FaGoogle />
+          <FaGoogle className="text-xl" />
           Sign Up With Google
-        </Button>
+        </button>
 
-        <p className="flex items-center mx-auto">
+        <p className="flex justify-center items-center mt-4 text-sm text-gray-600">
           Already have an account?{" "}
-          <Link href={"/signup"} className="text-sky-600 font-bold">
+          <Link href={"/login"} className="text-sky-600 font-bold ml-1 hover:underline">
             Log in
           </Link>
         </p>
-      </Form>
+      </form>
     </div>
   );
 }
