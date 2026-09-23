@@ -4,15 +4,23 @@ import Link from "next/link";
 import { headers } from "next/headers";
 
 const FeaturedDestinations = async () => {
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
   let destinations = [];
 
   try {
+    // getToken may throw if there is no active session (unauthenticated visitors)
+    let token = null;
+    try {
+      const tokenData = await auth.api.getToken({
+        headers: await headers(),
+      });
+      token = tokenData?.token ?? null;
+    } catch {
+      // No session — continue without a token
+    }
+
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
       headers: {
-        authorization: `Bearer ${token}`,
+        ...(token ? { authorization: `Bearer ${token}` } : {}),
       },
     });
     destinations = await res.json();
