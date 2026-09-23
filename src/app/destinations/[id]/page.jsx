@@ -10,20 +10,41 @@ import Booking from "@/components/Booking";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
+export const dynamic = 'force-dynamic';
+
 const DestinationDetails = async ({ params }) => {
   const { id } = await params;
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
+  let destinationDetails = null;
 
-  const res = await fetch(`http://localhost:5001/destinations/${id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-  const destinationDetails = await res.json();
+  try {
+    const { token } = await auth.api.getToken({
+      headers: await headers(),
+    });
 
-  console.log(id);
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations/${id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
+    if (res.ok) {
+      destinationDetails = await res.json();
+    }
+  } catch (err) {
+    console.error("Error fetching destination details:", err);
+  }
+
+  if (!destinationDetails || destinationDetails.message) {
+    return (
+      <div className="w-full max-w-6xl mx-auto p-8 my-16 text-center">
+        <h2 className="text-2xl font-bold text-gray-800">Destination Not Found</h2>
+        <p className="text-gray-500 mt-2">Unable to load details for this destination.</p>
+        <Link href="/destinations" className="inline-block mt-4 text-sky-500 font-semibold underline">
+          Back to Destinations
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-8 my-8 md:my-16">

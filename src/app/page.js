@@ -4,6 +4,8 @@ import WhyChoose from "@/components/WhyChoose";
 import Testimonials from "@/components/Testimonials";
 import CtaSection from "@/components/CtaSection";
 
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Wanderlust — Discover Your Next Adventure",
   description:

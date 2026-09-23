@@ -10,12 +10,15 @@ const FeaturedDestinations = async () => {
   let destinations = [];
 
   try {
-    const res = await fetch("http://localhost:5001/destinations", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
       headers: {
         authorization: `Bearer ${token}`,
       },
     });
-    destinations = await res.json();
+    const data = await res.json();
+    if (Array.isArray(data)) {
+      destinations = data;
+    }
   } catch {
     destinations = [];
   }

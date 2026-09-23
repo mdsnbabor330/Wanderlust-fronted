@@ -13,7 +13,7 @@ const DeleteModal = ({ destinationDetails }) => {
     const { data: tokenData } = await authClient.token();
     e.preventDefault();
 
-    const res = await fetch(`http://localhost:5001/destinations/${_id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations/${_id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
