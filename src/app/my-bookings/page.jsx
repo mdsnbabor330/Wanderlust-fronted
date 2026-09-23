@@ -1,10 +1,18 @@
 import DeleteBooking from "@/components/DeleteBooking";
+import { auth } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const MyBookings = async () => {
-  const res = await fetch("http://localhost:5001/booking", { cache: "no-store" });
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const res = await fetch("http://localhost:5001/booking", {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
   const bookingData = await res.json();
 
   return (
@@ -12,7 +20,9 @@ const MyBookings = async () => {
       {/* Page Header */}
       <div className="mb-3">
         <h1 className="text-4xl font-bold text-gray-900">My Bookings</h1>
-        <p className="text-gray-500 mt-1 text-sm">Manage and view your upcoming travel plans</p>
+        <p className="text-gray-500 mt-1 text-sm">
+          Manage and view your upcoming travel plans
+        </p>
       </div>
 
       <hr className="border-gray-200 my-5" />
@@ -40,14 +50,14 @@ const MyBookings = async () => {
           const badgeClass = isConfirmed
             ? "bg-emerald-100 text-emerald-800"
             : isPending
-            ? "bg-amber-100 text-amber-800"
-            : "bg-red-100 text-red-800";
+              ? "bg-amber-100 text-amber-800"
+              : "bg-red-100 text-red-800";
 
           const dotClass = isConfirmed
             ? "bg-emerald-500"
             : isPending
-            ? "bg-amber-400"
-            : "bg-red-500";
+              ? "bg-amber-400"
+              : "bg-red-500";
 
           return (
             <div
@@ -93,7 +103,9 @@ const MyBookings = async () => {
                 </div>
 
                 {/* Price */}
-                <p className="text-2xl font-bold text-sky-500">${booking.price}</p>
+                <p className="text-2xl font-bold text-sky-500">
+                  ${booking.price}
+                </p>
               </div>
 
               {/* Actions */}

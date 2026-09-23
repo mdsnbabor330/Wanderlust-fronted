@@ -1,34 +1,35 @@
 "use client";
-import { useState } from "react";
-import { redirect } from "next/navigation";
 
-const deleteModal = ({destinationDetails}) => {
-  const {
-    _id,
-    destinationName,
-  } = destinationDetails;
+import { authClient } from "@/lib/auth-client";
+import { redirect } from "next/navigation";
+import { useState } from "react";
+
+const DeleteModal = ({ destinationDetails }) => {
+  const { _id, destinationName } = destinationDetails;
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handelDelete = async (e) => {
-      e.preventDefault();
-      
-      const res= await fetch (`http://localhost:5001/destinations/${_id}`,{
-          method : 'DELETE',
-        headers:{
-            'content-type':'application/json'
-        }
-      })
-      const data= await res.json();
-      console.log(data);
-  
-      redirect("/destinations");
-    };
+    const { data: tokenData } = await authClient.token();
+    e.preventDefault();
+
+    const res = await fetch(`http://localhost:5001/destinations/${_id}`, {
+      method: "DELETE",
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${tokenData?.token}`,
+      },
+    });
+    const data = await res.json();
+    console.log(data);
+
+    redirect("/destinations");
+  };
 
   return (
     <>
-      <button 
-        onClick={() => setIsOpen(true)} 
+      <button
+        onClick={() => setIsOpen(true)}
         className="bg-red-500 hover:bg-red-600 text-white rounded-md px-4 py-2 transition-colors font-medium text-sm"
       >
         Delete
@@ -42,20 +43,22 @@ const deleteModal = ({destinationDetails}) => {
                 <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-red-600 text-2xl shrink-0">
                   ⚠️
                 </div>
-                <h3 className="text-xl font-bold text-gray-900">Delete Destination permanently?</h3>
+                <h3 className="text-xl font-bold text-gray-900">
+                  Delete Destination permanently?
+                </h3>
               </div>
               <p className="text-gray-600 mb-6">
-                This will permanently delete <strong>{destinationName}</strong> and all of its
-                data. This action cannot be undone.
+                This will permanently delete <strong>{destinationName}</strong>{" "}
+                and all of its data. This action cannot be undone.
               </p>
               <div className="flex justify-end gap-3">
-                <button 
+                <button
                   onClick={() => setIsOpen(false)}
                   className="px-5 py-2.5 rounded-lg text-gray-700 hover:bg-gray-100 font-medium transition-colors"
                 >
                   Cancel
                 </button>
-                <button 
+                <button
                   onClick={handelDelete}
                   className="px-5 py-2.5 rounded-lg bg-red-600 hover:bg-red-700 text-white font-medium transition-colors"
                 >
@@ -70,4 +73,4 @@ const deleteModal = ({destinationDetails}) => {
   );
 };
 
-export default deleteModal;
+export default DeleteModal;

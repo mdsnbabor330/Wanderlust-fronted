@@ -1,11 +1,19 @@
+import { auth } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
+import { headers } from "next/headers";
 
 const FeaturedDestinations = async () => {
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
   let destinations = [];
+
   try {
     const res = await fetch("http://localhost:5001/destinations", {
-      cache: "no-store",
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
     });
     destinations = await res.json();
   } catch {
@@ -63,14 +71,18 @@ const FeaturedDestinations = async () => {
 
                 {/* Body */}
                 <div className="p-4">
-                  <p className="text-gray-400 text-xs mb-1">📍 {dest.country}</p>
+                  <p className="text-gray-400 text-xs mb-1">
+                    📍 {dest.country}
+                  </p>
 
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <h3 className="text-lg font-bold text-gray-900 truncate">
                       {dest.destinationName}
                     </h3>
                     <p className="text-sm whitespace-nowrap shrink-0">
-                      <span className="font-bold text-gray-900">${dest.price}</span>
+                      <span className="font-bold text-gray-900">
+                        ${dest.price}
+                      </span>
                       <span className="text-gray-400 text-xs">/Person</span>
                     </p>
                   </div>

@@ -26,6 +26,12 @@ export default function SignUp() {
         toast.warning(error.message);
     }
   };
+  const handelGoogle = async () => {
+  const data = await authClient.signIn.social({
+    provider: "google",
+  });
+  console.log(data);
+};
 
   return (
     <div className="w-full max-w-md mx-auto my-30">
@@ -103,11 +109,13 @@ export default function SignUp() {
         </div>
 
         <button
+
+        onClick={handelGoogle}
           type="button"
-          className="font-bold bg-white border border-gray-200 flex justify-center items-center gap-3 text-gray-700 rounded-xl py-4 hover:bg-gray-50 transition-colors"
+          className="font-bold bg-white border border-gray-200 flex justify-center items-center gap-3 text-gray-700 rounded-xl py-4 hover:bg-gray-50 transition-colors cursor-pointer"
         >
           <FaGoogle className="text-xl" />
-          Sign Up With Google
+          Log In With Google
         </button>
 
         <p className="flex justify-center items-center mt-4 text-sm text-gray-600">

@@ -25,7 +25,7 @@ const AddDestination = () => {
 
     return (
         <form onSubmit={onSubmit}
-            className="w-full max-w-4xl mx-auto my-8 p-4 md:p-8 space-y-8 border border-gray-200 shadow-sm rounded-2xl"
+            className="w-full max-w-4xl mx-auto my-30 p-4 md:p-8 space-y-8 border border-gray-200 shadow-sm rounded-2xl"
           >
             <h1 className='text-3xl font-bold'>Add Destination</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

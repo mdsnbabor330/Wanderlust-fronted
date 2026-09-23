@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { redirect } from "next/navigation";
 import { BiEdit } from "react-icons/bi";
+import { authClient } from "@/lib/auth-client";
 
 export default function EditModal({ destinationDetails }) {
   const {
@@ -21,6 +22,7 @@ export default function EditModal({ destinationDetails }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+     const { data: tokenData } = await authClient.token();
     const formData = new FormData(e.currentTarget);
     const destination = Object.fromEntries(formData.entries());
     console.log(destination);
@@ -29,6 +31,8 @@ export default function EditModal({ destinationDetails }) {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
+                    authorization: `Bearer ${tokenData?.token}`
+
       },
       body: JSON.stringify(destination),
     });
