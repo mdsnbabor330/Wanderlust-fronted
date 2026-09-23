@@ -12,16 +12,26 @@ import { headers } from "next/headers";
 
 const DestinationDetails = async ({ params }) => {
   const { id } = await params;
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
+  let destinationDetails = {};
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations/${id}`, {
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-  const destinationDetails = await res.json();
+  try {
+    let token = null;
+    try {
+      const tokenData = await auth.api.getToken({ headers: await headers() });
+      token = tokenData?.token ?? null;
+    } catch {
+      // No session
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations/${id}`, {
+      headers: {
+        ...(token ? { authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    destinationDetails = await res.json();
+  } catch {
+    destinationDetails = {};
+  }
 
   console.log(id);
 

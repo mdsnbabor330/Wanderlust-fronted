@@ -7,18 +7,27 @@ import React from "react";
 import { CiLocationOn } from "react-icons/ci";
 
 const Destinations = async () => {
+  let destinations = [];
 
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
+  try {
+    let token = null;
+    try {
+      const tokenData = await auth.api.getToken({ headers: await headers() });
+      token = tokenData?.token ?? null;
+    } catch {
+      // No session
+    }
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
-    cache: "no-store",
-    headers: {
-      authorization: `Bearer ${token}`,
-    },
-  });
-  const destinations = await res.json();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
+      cache: "no-store",
+      headers: {
+        ...(token ? { authorization: `Bearer ${token}` } : {}),
+      },
+    });
+    destinations = await res.json();
+  } catch {
+    destinations = [];
+  }
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-28 mb-16 px-6 py-8">
