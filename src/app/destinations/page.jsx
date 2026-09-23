@@ -1,34 +1,24 @@
+import { auth } from "@/lib/auth";
 import { ArrowRight, Calendar } from "@gravity-ui/icons";
+import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import { CiLocationOn } from "react-icons/ci";
 
-export const dynamic = 'force-dynamic';
-
 const Destinations = async () => {
+
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
-  let destinations = [];
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
-      cache: "no-store",
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      destinations = data;
-    }
-  } catch (err) {
-    console.error("Error fetching destinations:", err);
-  }
 
-  console.log(destinations);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
+    cache: "no-store",
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  const destinations = await res.json();
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-28 mb-16 px-6 py-8">

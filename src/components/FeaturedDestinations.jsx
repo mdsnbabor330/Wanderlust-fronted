@@ -15,10 +15,7 @@ const FeaturedDestinations = async () => {
         authorization: `Bearer ${token}`,
       },
     });
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      destinations = data;
-    }
+    destinations = await res.json();
   } catch {
     destinations = [];
   }

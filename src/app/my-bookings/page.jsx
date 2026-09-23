@@ -1,31 +1,20 @@
 import DeleteBooking from "@/components/DeleteBooking";
 import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-
-export const dynamic = 'force-dynamic';
+import { headers } from "next/headers";
 
 const MyBookings = async () => {
-  let bookingData = [];
-  try {
-    const { token } = await auth.api.getToken({
-      headers: await headers(),
-    });
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    });
-    const data = await res.json();
-    if (Array.isArray(data)) {
-      bookingData = data;
-    }
-  } catch (err) {
-    console.error("Error fetching bookings:", err);
-  }
+  const { token } = await auth.api.getToken({
+    headers: await headers(),
+  });
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/booking`, {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  });
+  const bookingData = await res.json();
 
   return (
     <div className="max-w-4xl mx-auto mt-28 mb-16 px-6">
