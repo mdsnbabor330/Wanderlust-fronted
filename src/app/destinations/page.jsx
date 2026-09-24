@@ -10,20 +10,12 @@ const Destinations = async () => {
   let destinations = [];
 
   try {
-    let token = null;
-    try {
-      const tokenData = await auth.api.getToken({ headers: await headers() });
-      token = tokenData?.token ?? null;
-    } catch {
-      // No session
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
-      cache: "no-store",
-      headers: {
-        ...(token ? { authorization: `Bearer ${token}` } : {}),
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`,
+      {
+        cache: "no-store",
       },
-    });
+    );
     const data = await res.json();
     destinations = Array.isArray(data) ? data : [];
   } catch {
@@ -32,7 +24,9 @@ const Destinations = async () => {
 
   return (
     <div className="w-full max-w-7xl mx-auto mt-28 mb-16 px-6 py-8">
-      <h2 className="text-3xl font-bold text-gray-900">Explore All Destinations</h2>
+      <h2 className="text-3xl font-bold text-gray-900">
+        Explore All Destinations
+      </h2>
       <p className="text-gray-500 mt-1">
         Find your perfect travel experience from our curated collection
       </p>
@@ -68,7 +62,9 @@ const Destinations = async () => {
                 </p>
                 <p className="text-base font-bold text-sky-500 whitespace-nowrap">
                   ${destination.price}
-                  <span className="text-xs font-normal text-gray-500">/Person</span>
+                  <span className="text-xs font-normal text-gray-500">
+                    /Person
+                  </span>
                 </p>
               </div>
 

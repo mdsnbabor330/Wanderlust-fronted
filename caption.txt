@@ -1,0 +1,32 @@
+﻿Excited to launch Wanderlust! 
+
+I'm thrilled to share my latest full-stack project: **Wanderlust** — a modern travel experience & destination booking platform built with performance, security, and user experience at its core!
+
+**Key Highlights & Features:**
+**Seamless Authentication:** Secure Email/Password & Google OAuth integration powered by Better Auth & JWT.
+**Curated Travel Destinations:** Dynamic browsing with real-time detail views and curated recommendations.
+**Personalized Dashboard:** Track, manage, and cancel bookings effortlessly.
+**Responsive & Sleek UI:** Crafted with Next.js 16 (App Router), Tailwind CSS v4, and modern interactive components.
+**Robust Backend:** Express.js REST API integrated with MongoDB Atlas and token verification using Remote JWKS (`jose`).
+
+🛠️ **Tech Stack:**
+• **Frontend:** Next.js 16, React 19, Tailwind CSS v4, React Icons, React Toastify
+• **Backend:** Express.js, MongoDB Atlas, Better Auth, JWT (jose)
+• **Deployment:** Vercel
+
+🌐 **Live Demo:**
+https://wanderlust-client-sigma-two.vercel.app/
+
+
+**GitHub Repository:**
+
+Fronted:
+https://github.com/mdsnbabor330/Wanderlust-fronted.git
+Backend:
+https://github.com/mdsnbabor330/Wanderlust-backend.git
+
+Building this project was an awesome journey of solving real-world production deployment challenges, route protection with server components, and building clean UI architectures.
+
+I'd love to hear your thoughts and feedback! 👇
+
+#WebDevelopment #NextJS #ReactJS #FullStack #MongoDB #TailwindCSS #JavaScript #WebDev #SoftwareEngineering #Vercel #OpenSource

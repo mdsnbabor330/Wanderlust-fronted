@@ -1,28 +1,13 @@
-import { auth } from "@/lib/auth";
 import Image from "next/image";
 import Link from "next/link";
-import { headers } from "next/headers";
 
 const FeaturedDestinations = async () => {
   let destinations = [];
 
   try {
-    // getToken may throw if there is no active session (unauthenticated visitors)
-    let token = null;
-    try {
-      const tokenData = await auth.api.getToken({
-        headers: await headers(),
-      });
-      token = tokenData?.token ?? null;
-    } catch {
-      // No session — continue without a token
-    }
-
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`, {
-      headers: {
-        ...(token ? { authorization: `Bearer ${token}` } : {}),
-      },
-    });
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/destinations`,
+    );
     const data = await res.json();
     destinations = Array.isArray(data) ? data : [];
   } catch {
